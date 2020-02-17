@@ -27,12 +27,20 @@ router.post('/', (req, res) => {
     res.redirect('/');
 });
 
-router.put('/', (req, res) => {
+router.put('/edit/:id', (req, res) => {
+    const updateTodo = req.body;
 
+    todos.forEach( (todo) => {
+        if(todo.id === parseInt(req.params.id)) {
+            todo.title = updateTodo.title ? updateTodo.title : todo.title;
+
+            res.json({message: "Todo updated", todo});
+        } 
+    });
 });
 
-router.delete('/', (req, res) => {
-
+router.delete('/:id', (req, res) => {
+    
 });
 
 module.exports = router;

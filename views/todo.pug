@@ -13,7 +13,7 @@ html(lang="en")
                 -for(let todo of todos)
                     li
                         span= todo.title
-                        a(href=`/edit/${todo.id}`)
+                        a(href=`/edit/${todo.id}/${todo.title}`)
                             button(type='button') Edit
-                        button(type='button') Delete
+                        button(type='button')#delete Delete
                     

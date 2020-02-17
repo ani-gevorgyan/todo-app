@@ -1,6 +1,7 @@
 const express = require('express');
 const todoController = require('./routes/api/todos');
 const bodyParser = require('body-parser');
+const edit = require('./routes/edit');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.set("views", "./views")
 const PORT = process.env.PORT || 5000;
 
 app.use('/', require('./routes/api/todos'));
+app.use(edit);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
