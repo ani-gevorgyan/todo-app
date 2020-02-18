@@ -7,13 +7,12 @@ html(lang="en")
     body
     div#todo-table
         form(method='POST' action='/')
-            input(type='text' name='title' placeholder='Add new todo...' required)
+            input(type='text' name='title' placeholder='Add new todo...')
             button(type='submit') Add Todo
             ul
                 -for(let todo of todos)
                     li
                         span= todo.title
-                        a(href=`/edit/${todo.id}/${todo.title}`)
-                            button(type='button') Edit
-                        button(type='button')#delete Delete
-                    
+                        a(href=`/edit/${todo.id}`)
+                            button(formaction=`/edit/${todo.id}` type='button') Edit
+                        button(formaction=`/${todo.id}?_method=DELETE` type='submit')#delete Delete

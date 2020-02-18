@@ -2,12 +2,12 @@
 html(lang="en")
     head
         meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Edit Todo
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title= todo.title
     body
     h1 Edit Todo
-    h1= id
-    h1= title
-    form(method='POST', action=`/`)
-        input(type='text' name='title' value=`${title}`)
-        
+    h3=`ID --- ${todo.id}`
+
+    form(action=`/edit/${todo.id}?_method=PUT` method='post')
+        input(type='text' name='title' value=`${todo.title}`)#input
+        button(type='submit')#edit Edit 

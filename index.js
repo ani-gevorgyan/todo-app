@@ -1,6 +1,6 @@
 const express = require('express');
-const todoController = require('./routes/api/todos');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const edit = require('./routes/edit');
 
 const app = express();
@@ -8,6 +8,7 @@ const app = express();
 //Body Parser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
 
 //set up template engine
 app.set('view engine', 'pug')

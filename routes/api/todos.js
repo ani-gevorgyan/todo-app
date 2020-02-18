@@ -27,20 +27,15 @@ router.post('/', (req, res) => {
     res.redirect('/');
 });
 
-router.put('/edit/:id', (req, res) => {
-    const updateTodo = req.body;
-
-    todos.forEach( (todo) => {
-        if(todo.id === parseInt(req.params.id)) {
-            todo.title = updateTodo.title ? updateTodo.title : todo.title;
-
-            res.json({message: "Todo updated", todo});
-        } 
-    });
-});
-
 router.delete('/:id', (req, res) => {
+    for(let i = 0; i < todos.length; i++) {
+        if(todos[i].id == req.params.id) {
+            console.log(`Deleting todo with id ${req.params.id}`);
+            todos.splice(i, 1);
+        }       
+    }
     
+    res.render('todo', {todos});
 });
 
 module.exports = router;
