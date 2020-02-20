@@ -16,6 +16,8 @@ app.set("views", "./views")
 
 const PORT = process.env.PORT || 5000;
 
+app.use(express.static(__dirname + '/public'));
+
 app.use('/', require('./routes/api/todos'));
 app.use(edit);
 

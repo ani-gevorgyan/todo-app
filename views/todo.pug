@@ -3,16 +3,19 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        style
+            include ../public/style.css
         title Todo List
     body
     div#todo-table
+    h1.header To Do List
         form(method='POST' action='/')
             input(type='text' name='title' placeholder='Add new todo...')
-            button(type='submit') Add Todo
+            button(type='submit').btn#add Add
             ul
                 -for(let todo of todos)
                     li
                         span= todo.title
                         a(href=`/edit/${todo.id}`)
-                            button(formaction=`/edit/${todo.id}` type='button') Edit
-                        button(formaction=`/${todo.id}?_method=DELETE` type='submit')#delete Delete
+                            button(formaction=`/edit/${todo.id}` type='button').btn Edit
+                        button(formaction=`/${todo.id}?_method=DELETE` type='submit').btn#delete Delete
