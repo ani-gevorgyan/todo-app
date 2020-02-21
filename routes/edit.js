@@ -1,32 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const todos = require('../TODOs');
+const Todo = require('../models/Todos');
 
 router.get('/edit/:id', (req, res) => {
-    
-    let todo = todos.filter( (item) => {
-        // console.log('----------' + item.id, item.title);
-        return item.id == req.params.id;
-    });
-
-    let id = todo[0].id;
-    let title = todo[0].title;
-    const task = {id, title};
-    // res.json({todo: task});
-    res.render('edit', {todo: task});
+    Todo.find({
+            _id: req.params.id
+        })
+        .then((todo) => {
+            console.log(todo);
+            res.render('edit', {id: todo[0]._id, title: todo[0].title});
+        });
 });
+
 
 router.put('/edit/:id', (req, res) => {
-    const updateTodo = req.body;
-    console.log(req.body);
-
-    todos.forEach( (todo) => {
-        if(parseInt(todo.id) === parseInt(req.params.id)) {
-            todo.title = updateTodo.title ? updateTodo.title : todo.title;
-            console.log(req.params.id);
+    Todo.updateOne({
+            _id: req.params.id
+        }, {
+            title: req.body.title
+        })
+        .then(() => {
             res.redirect('/');
-        } 
-    });
+        });
 });
+
 
 module.exports = router;

@@ -1,41 +1,49 @@
 const express = require('express');
 const uuid = require('uuid');
 const router = express.Router();
-const todos = require('../../TODOs');
+const Todo = require('../../models/Todos');
 
 
 router.get('/', (req, res) => {
-    res.render('todo', {
-        todos
+    Todo.find({}).then((todos) => {
+        res.render('todo', {
+            todos
+        });
     });
 });
 
 router.post('/', (req, res) => {
-    const newTODO = {
+    const newTODO = new Todo({
         id: uuid.v4(),
         title: req.body.title
-    }
+    });
 
-    if (!newTODO.title) {
-        return res.status(400).json({
-            message: 'Please write a todo'
+    newTODO.save()
+        .then((result) => {
+            console.log(result);
+            res.redirect('/');
+        }).catch((err) => {
+            console.log(err);
+            res.redirect('/');
         })
-    }
-
-    todos.push(newTODO);
-    // res.json(todos);
-    res.redirect('/');
 });
 
 router.delete('/:id', (req, res) => {
-    for(let i = 0; i < todos.length; i++) {
-        if(todos[i].id == req.params.id) {
-            console.log(`Deleting todo with id ${req.params.id}`);
-            todos.splice(i, 1);
-        }       
-    }
-    
-    res.render('todo', {todos});
+    let id = parseInt(req.params.id)
+    Todo.find({
+            id: id
+        })
+        .then((item) => {
+            Todo
+                .deleteOne()
+                .then(item => console.log('Removed item succesfully', item))
+                .catch(err => console.log(err))
+            console.log(item);
+        })
+        .catch(err => console.log(err));
+
+
+    res.redirect('/')
 });
 
 module.exports = router;

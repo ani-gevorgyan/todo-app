@@ -1,7 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const mongoose = require('mongoose');
 const edit = require('./routes/edit');
+
+mongoose.connect('mongodb://localhost:27017/mongoose_express_todos', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Database connected.');
+})
 
 const app = express();
 
